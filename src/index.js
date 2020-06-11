@@ -3,7 +3,7 @@ const userRouter = require("./Routers/userRouter");
 const busRouter = require("./Routers/busRouter");
 
 const app = express();
-
+app.use(express.json({ extended: false }));
 app.use("/api/user", userRouter);
 app.use("/api/bus", busRouter);
 

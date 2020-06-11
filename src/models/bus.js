@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
 
 const BusSchema = new Schema({
-  name: {
+  busName: {
     type: String,
     required: true
   },
