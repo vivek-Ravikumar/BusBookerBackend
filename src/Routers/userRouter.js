@@ -3,6 +3,7 @@ require("../config/dbconnect");
 const { generateHashSynch, compareHash } = require("../utils/pwdHash");
 const { tokenGenerator } = require("../utils/jwtToken");
 const User = require("../models/user");
+const Bus = require("../models/bus");
 const AuthFunction = require("../middleware/authFunction");
 const userRouter = express.Router();
 
@@ -10,9 +11,15 @@ const userRouter = express.Router();
 userRouter.get("/", AuthFunction, async (req, res) => {
   if (req.userId) {
     try {
-      const currentUser = await User.findById(req.userId).select(
-        "-passwordHash"
-      );
+      const currentUser = await User.findById(req.userId)
+        .select("-passwordHash")
+        .populate({
+          path: "tickets",
+          populate: {
+            path: 'busId',
+            model: 'bus'
+          }
+        });
       if (currentUser) {
         res.status(200).send({ status: "success", user: currentUser });
       } else {
@@ -26,6 +33,8 @@ userRouter.get("/", AuthFunction, async (req, res) => {
     res.status(400).send({ status: "unauthorized" });
   }
 });
+
+//https://q2qpt.sse.codesandbox.io/api/users/login
 
 //signupRoute
 userRouter.post("/signup", async (req, res) => {
@@ -65,7 +74,7 @@ userRouter.post("/signup", async (req, res) => {
 //loginRoute
 userRouter.post("/login", async (req, res) => {
   const { email, password } = req.body;
-
+  console.log("login Route accessed");
   try {
     if (email && password) {
       const existingUser = await User.findOne({ email });

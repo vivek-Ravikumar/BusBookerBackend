@@ -15,11 +15,14 @@ const BusSchema = new Schema({
     type: String,
     required: true
   },
+  time: {
+    type: String,
+    required: true
+  },
   seats: [
     {
       sNumber: { type: String },
-      available: { type: Boolean },
-      bookedBy: Schema.Types.ObjectId
+      available: { type: Boolean }
     }
   ]
 });

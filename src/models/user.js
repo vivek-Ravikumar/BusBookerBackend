@@ -16,7 +16,12 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  tickets: {}
+  tickets: [
+    {
+      busId: { type: Schema.Types.ObjectId, ref: "Bus" },
+      sSeats: []
+    }
+  ]
 });
 
 const User = model("user", UserSchema);
