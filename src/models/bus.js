@@ -15,6 +15,18 @@ const BusSchema = new Schema({
     type: String,
     required: true
   },
+  type: {
+    type: String,
+    required: true
+  },
+  ac: {
+    type: Boolean,
+    required: true
+  },
+  price: {
+    type: Number,
+    required: true
+  },
   time: {
     type: String,
     required: true
